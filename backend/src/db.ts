@@ -10,8 +10,8 @@ const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
 });
 
-// Test the connection automatically when the app starts with strict explicit typing
-pool.connect((err: Error | null, client: any, release: (err?: boolean | Error) => void) => {
+// Test the connection automatically when the app starts using flexible typing
+pool.connect((err: any, client: any, release: any) => {
   if (err) {
     return console.error('❌ Error acquiring database client:', err.stack);
   }
