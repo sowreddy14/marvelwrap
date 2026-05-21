@@ -1,9 +1,9 @@
 import express, { Request, Response } from 'express';
 import dotenv from 'dotenv';
-import './db';    // 👈 REMOVE THE EXTENSION (.js) HERE
-import './redis';
+import './db.js';    // 👈 REMOVE THE EXTENSION (.js) HERE
+import './redis.js';
 
-import pool from './db'; // 👈 REMOVE THE EXTENSION (.js) HERE
+import pool from './db.js'; // 👈 REMOVE THE EXTENSION (.js) HERE
 
 dotenv.config();
 
@@ -67,7 +67,7 @@ app.post('/api/db/init', async (req: Request, res: Response) => {
   }
 });
 
-import redis from './redis'; // Ensure redis is imported at the top of your file
+import redis from './redis.js'; // Ensure redis is imported at the top of your file
 
 // 3. High-Performance Cache-Aside Wrap Metrics Route
 app.get('/api/users/:id/wrap', async (req: Request, res: Response) => {
