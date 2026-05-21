@@ -1,0 +1,33 @@
+# ==========================================
+# 1. System & OS Overheads
+# ==========================================
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+.DS_Store
+
+# ==========================================
+# 2. Local Environment Secrets (Passwords)
+# ==========================================
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# ==========================================
+# 3. Heavy Dependency Folders (Packages)
+# ==========================================
+node_modules/
+backend/node_modules/
+frontend/node_modules/
+
+# ==========================================
+# 4. Local Build & Compilation Outputs
+# ==========================================
+dist/
+build/
+.next/
+out/
+.tscache/
+*.tsbuildinfo
