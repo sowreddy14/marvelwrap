@@ -1,105 +1,305 @@
-# 🎬 MarvelWrap
+# 🦸 MarvelWrap
 
-MarvelWrap is an interactive web application inspired by the Spotify Wrapped format, built for the Marvel Cinematic Universe (MCU). It analyzes a user's logged MCU movie-watching history to generate a high-energy, mobile-like slideshow showing stats like total watch time, favorite MCU phase, and top superhero personas.
+<p align="center">
+  <b>A Full-Stack MCU Analytics Experience Inspired by Spotify Wrapped</b>
+</p>
 
----
-
-## 🏛️ Tech Stack
-
-- **Frontend:** Next.js + TypeScript
-- **Styling & Animations:** Tailwind CSS + Framer Motion
-- **State Management:** Zustand
-- **Backend API:** Node.js + TypeScript
-- **Database:** PostgreSQL
-- **Caching Layer:** Redis
-- **CI/CD:** GitHub Actions
+<p align="center">
+  Transform your Marvel Cinematic Universe watch history into an immersive animated story experience.
+</p>
 
 ---
 
-## 🗄️ Database Setup
+## 🚀 Live Deployments
 
-Run these SQL queries to set up your PostgreSQL database tables:
+| Service | Link |
+|----------|------|
+| 🎨 Frontend | https://marvelwrap.vercel.app/ |
+| ⚡ Backend API | https://marvelwrap-backend.onrender.com |
 
-```sql
--- Users Table
-CREATE TABLE users (
-    id SERIAL PRIMARY KEY,
-    username VARCHAR(50) UNIQUE NOT NULL,
-    email VARCHAR(100) UNIQUE NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+---
 
--- MCU Movies Metadata
-CREATE TABLE mcu_movies (
-    id INT PRIMARY KEY,
-    title VARCHAR(150) NOT NULL,
-    phase VARCHAR(20) NOT NULL,
-    runtime_minutes INT NOT NULL,
-    poster_path VARCHAR(255),
-    release_date DATE
-);
+# ✨ Features
 
--- User Watch History (Junction Table)
-CREATE TABLE user_watch_history (
-    id SERIAL PRIMARY KEY,
-    user_id INT REFERENCES users(id) ON DELETE CASCADE,
-    movie_id INT REFERENCES mcu_movies(id) ON DELETE CASCADE,
-    watched_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    UNIQUE(user_id, movie_id)
-);
+- 🎬 MCU movie watch analytics
+- 📊 Personalized viewing insights
+- ⚡ Smooth animated slideshow transitions
+- 🧠 Favorite MCU phase detection
+- 🦸 Hero personality statistics
+- 🚀 Redis-powered caching layer
+- 🔒 Secure PostgreSQL integration
+- 🌐 Full-stack deployment architecture
+- 📱 Responsive mobile-first UI
+- 🛠️ CI/CD automation pipeline
+
+---
+
+# 🏗️ Tech Stack
+
+## 🎨 Frontend
+
+| Technology | Purpose |
+|------------|---------|
+| Next.js 14 | Frontend Framework |
+| TypeScript | Type Safety |
+| Tailwind CSS | Styling |
+| Framer Motion | Animations |
+| Zustand | Global State Management |
+
+---
+
+## ⚡ Backend
+
+| Technology | Purpose |
+|------------|---------|
+| Node.js | Runtime |
+| Express.js | API Framework |
+| TypeScript | Backend Type Safety |
+| PostgreSQL | Primary Database |
+| Redis | Caching Layer |
+
+---
+
+## ⚙️ DevOps
+
+| Technology | Purpose |
+|------------|---------|
+| GitHub Actions | CI/CD |
+| Vercel | Frontend Hosting |
+| Render | Backend Hosting |
+
+---
+
+# 🧩 System Architecture
+
+```text
+┌──────────────────────────────────────┐
+│        Next.js Frontend (Vercel)    │
+└──────────────────┬───────────────────┘
+                   │ REST API
+                   ▼
+┌──────────────────────────────────────┐
+│    Express + TypeScript Backend     │
+│             (Render)                │
+└───────────────┬───────────────┬──────┘
+                │               │
+                ▼               ▼
+        ┌─────────────┐   ┌─────────────┐
+        │ PostgreSQL  │   │    Redis    │
+        │   Database  │   │    Cache    │
+        └─────────────┘   └─────────────┘
 ```
 
 ---
 
-## 🛠️ Installation & Run Guide
+# 📁 Project Structure
 
-### 1. Clone the Project & Install Dependencies
-
-```bash
-git clone https://github.com/yourusername/marvelwrap.git
-cd marvelwrap
-
-# Install Backend
-cd backend && npm install
-
-# Install Frontend
-cd ../frontend && npm install
+```text
+MarvelWrap/
+│
+├── frontend/                 # Next.js Frontend
+├── backend/                  # Express Backend
+├── .github/
+│   └── workflows/            # CI/CD Pipelines
+│
+└── README.md
 ```
 
 ---
 
-### 2. Environment Configuration
+# ⚙️ Local Development Setup
 
-Create a `.env` file in your `/backend` folder:
+## 📌 Prerequisites
 
-```env
-PORT=5000
-DATABASE_URL=postgresql://postgres:password@localhost:5432/marvelwrap
-REDIS_URL=redis://localhost:6379
-```
+Make sure the following are installed:
 
-Create a `.env.local` file in your `/frontend` folder:
-
-```env
-NEXT_PUBLIC_API_URL=http://localhost:5000
-```
+- Node.js v20+
+- PostgreSQL
+- Redis (optional for local caching)
 
 ---
 
-### 3. Run the App Locally
-
-#### Start Backend Server
+# 🔧 Backend Setup
 
 ```bash
 cd backend
+npm install
+```
+
+Create a `.env` file inside `/backend`:
+
+```env
+PORT=10000
+DATABASE_URL=postgresql://your_user:your_password@localhost:5432/marvelwrap
+NODE_ENV=development
+```
+
+Run the backend server:
+
+```bash
 npm run dev
 ```
 
-#### Start Frontend Server
+---
+
+# 🎨 Frontend Setup
 
 ```bash
 cd frontend
+npm install
+```
+
+Create a `.env.local` file inside `/frontend`:
+
+```env
+NEXT_PUBLIC_API_URL=http://localhost:10000
+```
+
+Run the frontend application:
+
+```bash
 npm run dev
 ```
 
-Open `http://localhost:3000` in your web browser to view the application!
+---
+
+# 🛡️ Database Initialization
+
+Initialize the PostgreSQL schema using:
+
+```bash
+curl -X POST https://marvelwrap-backend.onrender.com/api/db/init
+```
+
+---
+
+# ⚡ CI/CD Pipeline
+
+GitHub Actions automatically validates and builds the project on every push and pull request.
+
+```yaml
+name: MarvelWrap Full-Stack CI/CD Pipeline
+
+on: [push, pull_request]
+
+jobs:
+  audit-and-verify:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Verify Backend
+        run: |
+          cd backend
+          npm ci
+          npx tsc --noEmit
+
+      - name: Verify Frontend
+        run: |
+          cd frontend
+          npm ci
+          npm run build
+```
+
+---
+
+# 🌟 Future Improvements
+
+- 🔐 User Authentication & Profiles
+- 🧠 AI-generated watch summaries
+- 📈 Advanced analytics dashboard
+- 🎵 MCU soundtrack integration
+- 🏆 Shareable Wrapped cards
+- 🌍 Social leaderboard support
+- ☁️ Multi-region backend deployment
+- 📊 Real-time watch statistics
+
+---
+
+# 🤝 Contributing
+
+Contributions are welcome and appreciated.
+
+## Steps to Contribute
+
+```bash
+# Fork the repository
+
+# Clone your fork
+git clone https://github.com/your-username/marvelwrap.git
+
+# Move into the project directory
+cd marvelwrap
+
+# Create a new branch
+git checkout -b feature/amazing-feature
+
+# Install dependencies
+npm install
+
+# Commit your changes
+git commit -m "Add amazing feature"
+
+# Push changes
+git push origin feature/amazing-feature
+```
+
+Then create a Pull Request 🚀
+
+---
+
+# 🛠️ Available Scripts
+
+## Frontend
+
+```bash
+npm run dev       # Start development server
+npm run build     # Production build
+npm run start     # Start production server
+```
+
+## Backend
+
+```bash
+npm run dev       # Start backend server
+npm run build     # Build backend
+npm run start     # Start production backend
+```
+
+---
+
+# 📜 License
+
+MIT License
+
+Copyright (c) 2026 MarvelWrap
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND.
+
+---
+
+# 💥 Inspiration
+
+MarvelWrap was inspired by the storytelling experience of Spotify Wrapped and reimagined for Marvel fans who love cinematic analytics, immersive UI experiences, and personalized entertainment data.
+
+---
+
+# ❤️ Built For Marvel Fans
+
+> “Part of the journey is the end.” — Tony Stark
+
+<p align="center">
+  ⭐ If you like this project, consider giving it a star on GitHub!
+</p>
