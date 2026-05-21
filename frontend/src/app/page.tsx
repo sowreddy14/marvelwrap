@@ -1,82 +1,53 @@
 'use client';
+import { motion } from 'framer-motion';
+import Link from 'next/link';
 
-import { useEffect } from 'react';
-import { useWrapStore } from '../store/useWrapStore';
-import SlideAnimation from '../components/SlideAnimation';
-
-const MOCK_SLIDES = [
-  { id: 1, title: "Welcome to Your MarvelWrap 🎬", description: "Let's review your epic year inside the MCU multiverse." },
-  { id: 2, title: "Time Commitment ⏱️", description: "You spent 4,280 minutes watching superheroes save the cosmos." },
-  { id: 3, title: "Your Ultimate Variant 🦸", description: "Your viewing behavior perfectly aligns with Iron Man: Strategic Technologist." },
-  { id: 4, title: "Favorite Nexus Era 🌌", description: "You completely dominated Phase 3 (The Infinity Saga) content." },
-  { id: 5, title: "See You In the Next Timeline! 🚀", description: "Keep logging your watches to track your future variant paths." }
-];
-
-export default function Home() {
-  const { currentSlideIndex, setTotalSlides, nextSlide, prevSlide } = useWrapStore();
-
-  useEffect(() => {
-    setTotalSlides(MOCK_SLIDES.length);
-  }, [setTotalSlides]);
-
-  const activeSlide = MOCK_SLIDES[currentSlideIndex];
-
+export default function LandingPage() {
   return (
-    <main className="flex h-screen w-screen flex-col items-center justify-center bg-zinc-950 text-white font-sans p-4 select-none">
-      
-      {/* Visual Mobile Container Mockup */}
-      <div className="relative w-full max-w-md h-[70vh] flex flex-col justify-between bg-gradient-to-br from-red-900/30 via-zinc-950 to-black border border-red-500/20 rounded-3xl p-8 shadow-2xl shadow-red-950/20 overflow-hidden">
-        
-        {/* Progress Tracker Bars Indicator */}
-        <div className="flex gap-1.5 w-full absolute top-4 left-0 px-4 z-10">
-          {MOCK_SLIDES.map((_, index) => (
-            <div 
-              key={index} 
-              className="h-1 flex-1 bg-zinc-800 rounded-full overflow-hidden"
-            >
-              <div 
-                className={`h-full bg-red-600 transition-all duration-300 ${index <= currentSlideIndex ? 'w-full' : 'w-0'}`}
-              />
-            </div>
-          ))}
-        </div>
+    <main className="relative min-h-screen bg-black flex flex-col items-center justify-center overflow-hidden text-white select-none">
+      {/* Cinematic Background Glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-red-600 rounded-full blur-[150px] opacity-20 pointer-events-none" />
 
-        {/* Cinematic Animated Content Window Container */}
-        <div className="flex-1 flex items-center justify-center">
-          <SlideAnimation slideIndex={currentSlideIndex}>
-            <div className="text-center space-y-4 px-2">
-              <h1 className="text-3xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-amber-400 to-red-600 uppercase drop-shadow-md">
-                {activeSlide?.title}
-              </h1>
-              <p className="text-zinc-300 text-lg max-w-xs font-semibold leading-relaxed">
-                {activeSlide?.description}
-              </p>
-            </div>
-          </SlideAnimation>
-        </div>
+      {/* Content Container */}
+      <div className="text-center z-10 max-w-2xl px-4">
+        <motion.h1 
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="text-6xl md:text-8xl font-black tracking-tighter uppercase font-sans bg-clip-text text-transparent bg-gradient-to-b from-white via-neutral-200 to-neutral-500"
+        >
+          Marvel<span className="text-red-600 drop-shadow-[0_0_35px_rgba(220,38,38,0.3)]">Wrap</span>
+        </motion.h1>
 
-        {/* Navigation Action Layer Hooks */}
-        <div className="flex justify-between items-center w-full mt-4 z-10">
-          <button 
-            onClick={prevSlide}
-            disabled={currentSlideIndex === 0}
-            className="px-4 py-2 bg-zinc-900/80 border border-zinc-800 hover:bg-zinc-800 disabled:opacity-20 disabled:pointer-events-none rounded-xl font-bold transition-all text-sm"
-          >
-            ← Back
-          </button>
-          
-          <span className="text-zinc-600 text-xs font-mono font-bold tracking-widest">
-            {currentSlideIndex + 1} / {MOCK_SLIDES.length}
-          </span>
+        <motion.p 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.4, duration: 0.8 }}
+          className="mt-6 text-lg md:text-xl text-neutral-400 font-light tracking-wide"
+        >
+          Your cinematic journey across the sacred timeline. Analyze your metrics, track the phases, and unlock your viewing universe.
+        </motion.p>
 
-          <button 
-            onClick={nextSlide}
-            disabled={currentSlideIndex === MOCK_SLIDES.length - 1}
-            className="px-4 py-2 bg-gradient-to-r from-red-700 to-red-600 hover:from-red-600 hover:to-red-500 disabled:opacity-20 disabled:pointer-events-none rounded-xl font-bold transition-all text-sm shadow-lg shadow-red-900/40"
-          >
-            Advance →
-          </button>
-        </div>
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.8, duration: 0.5 }}
+          className="mt-10"
+        >
+          <Link href="/timeline">
+            <button className="relative group px-8 py-4 bg-red-600 text-white font-bold tracking-widest uppercase rounded-md text-sm border border-red-500 overflow-hidden shadow-[0_0_30px_rgba(220,38,38,0.2)] transition-all duration-300 hover:scale-105 hover:shadow-[0_0_50px_rgba(220,38,38,0.5)]">
+              <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-red-500 to-amber-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <span className="relative z-10 flex items-center gap-2">
+                Enter the Timeline ⚡
+              </span>
+            </button>
+          </Link>
+        </motion.div>
+      </div>
+
+      {/* Subtle Bottom Accent */}
+      <div className="absolute bottom-6 text-xs text-neutral-600 tracking-widest uppercase font-mono">
+        SECURE GATE // SYSTEM ONLINE
       </div>
     </main>
   );
