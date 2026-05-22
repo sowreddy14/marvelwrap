@@ -19,8 +19,8 @@ export default function AdminPage() {
   const [biography, setBiography] = useState('');
 
   // Junction Dropdown Selection Tracking States
-  const [moviesList, setMoviesList] = useState<any[]>([]);
-  const [charsList, setCharsList] = useState<any[]>([]);
+  const [moviesList, setMoviesList] = useState<Array<{ id: string; title: string; release_year: number }>>([]);
+  const [charsList, setCharsList] = useState<Array<{ id: string; char_name: string }>>([]);
   const [selectedMovieId, setSelectedMovieId] = useState('');
   const [selectedCharId, setSelectedCharId] = useState('');
 
@@ -66,7 +66,10 @@ export default function AdminPage() {
       alert(`🎉 Movie "${title}" added successfully!`);
       setTitle(''); setYear(''); setDescription('');
       fetchDropdownData();
-    } catch (err: any) { alert(err.message); }
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : String(err);
+      alert(msg);
+    }
     setIsSubmitting(false);
   };
 
@@ -83,7 +86,10 @@ export default function AdminPage() {
       alert(`🎉 Character "${charName}" created successfully!`);
       setCharName(''); setActorName(''); setBiography('');
       fetchDropdownData();
-    } catch (err: any) { alert(err.message); }
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : String(err);
+      alert(msg);
+    }
     setIsSubmitting(false);
   };
 
@@ -99,7 +105,10 @@ export default function AdminPage() {
       });
       if (!res.ok) throw new Error('Failed to create relational link');
       alert('⚡ Successfully linked character to movie inside junction index!');
-    } catch (err: any) { alert(err.message); }
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : String(err);
+      alert(msg);
+    }
     setIsSubmitting(false);
   };
 

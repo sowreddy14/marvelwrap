@@ -3,9 +3,21 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 
+interface Character {
+  char_name: string;
+  actor_name: string;
+  biography: string;
+  movies: Array<{
+    id: string;
+    phase: string;
+    title: string;
+    release_year: number;
+  }>;
+}
+
 export default function CharacterDetailsPage() {
   const { id } = useParams();
-  const [character, setCharacter] = useState<any>(null);
+  const [character, setCharacter] = useState<Character | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -42,7 +54,7 @@ export default function CharacterDetailsPage() {
           <h2 className="text-sm font-mono text-neutral-500 uppercase tracking-widest mb-3">Filmography Appearance Map</h2>
           {character.movies && character.movies.length > 0 ? (
             <div className="space-y-2">
-              {character.movies.map((movie: any) => (
+              {character.movies.map((movie) => (
                 <Link href={`/timeline/${movie.id}`} key={movie.id} className="block">
                   <div className="border border-neutral-900 bg-neutral-900/40 p-4 rounded-lg flex justify-between items-center hover:border-neutral-700 hover:bg-neutral-900 transition-all cursor-pointer">
                     <div>

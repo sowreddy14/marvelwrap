@@ -3,9 +3,23 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 
+interface Character {
+  id: string;
+  char_name: string;
+  actor_name: string;
+}
+
+interface Movie {
+  phase: string;
+  title: string;
+  release_year: number;
+  description: string;
+  characters: Character[];
+}
+
 export default function MovieDetailsPage() {
   const { id } = useParams();
-  const [movie, setMovie] = useState<any>(null);
+  const [movie, setMovie] = useState<Movie | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -43,7 +57,7 @@ export default function MovieDetailsPage() {
           <h2 className="text-sm font-mono text-neutral-500 uppercase tracking-widest mb-3">Attending Characters</h2>
           {movie.characters && movie.characters.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {movie.characters.map((char: any) => (
+              {movie.characters.map((char: Character) => (
                 <Link href={`/characters/${char.id}`} key={char.id} className="block">
                   <div className="border border-neutral-900 bg-neutral-900/40 p-4 rounded-lg hover:border-red-600 hover:bg-neutral-900 transition-all cursor-pointer">
                     <div className="font-bold text-sm text-neutral-200">{char.char_name}</div>
